@@ -29,6 +29,29 @@ var Engine = (function(global) {
     canvas.height = 606;
     doc.body.appendChild(canvas);
 
+    // This function displays the score
+    function updateScore () {
+        ctx.font = '25px Arial';
+        ctx.textAlign = 'right';
+        ctx.fillStyle = '#fff';
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        ctx.fillStyle = '#000';
+        ctx.fillText('Score: ' + player.score, 500, 40);
+        ctx.textAlign = 'left';
+        ctx.fillText('Level: ' + player.level, 0, 40);
+    }
+  
+    // This function updates level and makes the next level tougher 
+    function levelUp () {
+        if (player.score == player.scoreForNextLvl) {
+            player.scoreForNextLvl *= 2;
+            player.level++;
+            for (var i = 0; i < enemyArrayLength; i++) {
+                allEnemies[i].speed *= 1.25;
+            }
+        }
+    }
+
     /* This function serves as the kickoff point for the game loop itself
      * and handles properly calling the update and render methods.
      */
@@ -80,7 +103,9 @@ var Engine = (function(global) {
      */
     function update(dt) {
         updateEntities(dt);
-        // checkCollisions();
+        checkCollisions();
+        levelUp();
+        updateScore();
     }
 
     /* This is called by the update function and loops through all of the
@@ -94,7 +119,6 @@ var Engine = (function(global) {
         allEnemies.forEach(function(enemy) {
             enemy.update(dt);
         });
-        player.update();
     }
 
     /* This function initially draws the "game level", it will then call
@@ -171,7 +195,8 @@ var Engine = (function(global) {
         'images/water-block.png',
         'images/grass-block.png',
         'images/enemy-bug.png',
-        'images/char-boy.png'
+        'images/char-boy.png',
+        'images/Heart.png'
     ]);
     Resources.onReady(init);
 
