@@ -29,7 +29,7 @@ var Engine = (function(global) {
     canvas.height = 606;
     doc.body.appendChild(canvas);
 
-    // This function displays the score
+    // This function displays the score and level
     function updateScore () {
         ctx.font = '25px Arial';
         ctx.textAlign = 'right';
@@ -41,16 +41,6 @@ var Engine = (function(global) {
         ctx.fillText('Level: ' + player.level, 0, 40);
     }
   
-    // This function updates level and makes the next level tougher 
-    function levelUp () {
-        if (player.score == player.scoreForNextLvl) {
-            player.scoreForNextLvl *= 2;
-            player.level++;
-            for (var i = 0; i < enemyArrayLength; i++) {
-                allEnemies[i].speed *= 1.25;
-            }
-        }
-    }
 
     /* This function serves as the kickoff point for the game loop itself
      * and handles properly calling the update and render methods.
@@ -104,8 +94,9 @@ var Engine = (function(global) {
     function update(dt) {
         updateEntities(dt);
         checkCollisions();
-        levelUp();
+        player.levelUp();
         updateScore();
+        star.checkIfCaptured();
     }
 
     /* This is called by the update function and loops through all of the
@@ -174,7 +165,7 @@ var Engine = (function(global) {
         allEnemies.forEach(function(enemy) {
             enemy.render();
         });
-
+        star.render();
         player.render();
     }
 
@@ -196,7 +187,7 @@ var Engine = (function(global) {
         'images/grass-block.png',
         'images/enemy-bug.png',
         'images/char-boy.png',
-        'images/Heart.png'
+        'images/Star.png'
     ]);
     Resources.onReady(init);
 

@@ -45,6 +45,9 @@ var Player = function(){
     this.scoreForNextLvl = 50;
 };
 
+// Renders player. When the player hits
+// the water, resets player and adds
+// score
 Player.prototype.render = function() {
     if (this.y < 60) {
         this.reset();
@@ -53,6 +56,7 @@ Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);  
 };
 
+// Enable Player controls with arrow keys
 Player.prototype.handleInput = function (key) {
     if (key == 'left' && this.x>0) {
         this.x -= 100;
@@ -67,10 +71,22 @@ Player.prototype.handleInput = function (key) {
     }
 }
 
+// Resets player position
 Player.prototype.reset = function () {
     this.x = 200;
     this.y = 380;
 }
+
+   // This function updates level and makes the next level tougher 
+    Player.prototype.levelUp = function () {
+        if (this.score >= this.scoreForNextLvl) {
+            this.scoreForNextLvl *= 2;
+            this.level++;
+            for (var i = 0; i < enemyArrayLength; i++) {
+                allEnemies[i].speed *= 1.25;
+            }
+        }
+    }
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
@@ -80,7 +96,8 @@ var bug2 = new Enemy(0,140,150);
 var bug3 = new Enemy(0,220,300);
 var bug4 = new Enemy(-300,60,75);
 var bug5 = new Enemy(0,300,100);
-var allEnemies = [bug1, bug2, bug3, bug4, bug5];
+var bug6 = new Enemy(-255,300,100);
+var allEnemies = [bug1, bug2, bug3, bug4, bug5, bug6];
 var player = new Player();
 enemyArrayLength = allEnemies.length;
 
@@ -96,6 +113,7 @@ function checkCollisions () {
             player.reset();
             player.score = 0;
             player.level = 1;
+            player.scoreForNextLvl = 50;
             enemySpeedReset();
         }
     }
