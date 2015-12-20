@@ -1,6 +1,15 @@
-frontend-nanodegree-arcade-game
-===============================
+##How to Launch the Game##
+Open index.html in your favourite browser.
 
-Students should use this [rubric](https://www.udacity.com/course/viewer/#!/c-nd001/l-2696458597/m-2687128535) for self-checking their submission.
+##How to Play##
 
-For detailed instructions on how to get started, check out this [guide](https://docs.google.com/document/d/1v01aScPjSWCCWQLIpFqvg3-vXLH2e8_SZQKC8jNO0Dc/pub?embedded=true).
+Use the arrow keys to move your player up &uarr;, down &darr;, left &larr; and right &rarr;.
+
+Get your player to the water without touching the bug. Points allocations are as follows:
+- Get to the water = 10 points
+- Collect a star = 20 points
+- Touch a bug = You lose!! Restart
+
+As you accrue points, you level up. Each new level results in faster enemies!! The first level up occurs after 50 pts. Points to reach the next level is:
+>2*the points needed for the previous level.
+
